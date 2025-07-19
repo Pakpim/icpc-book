@@ -20,6 +20,6 @@ void usage() {
   st.insert(1);
   cout << st.order_of_key(2);
   cout << *st.find_by_order(1);
-  st.erase(st.find_by_order(ss.order_of_key(5)));
+  st.erase(st.find_by_order(st.order_of_key(5)));
   st.join(st_2); // merge
 }

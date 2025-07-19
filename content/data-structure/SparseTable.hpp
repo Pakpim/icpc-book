@@ -4,8 +4,8 @@
  * Author: Pasin P.
  * Date: 2025-07-20
  * Description: Sparse Table for finding static range queries of monoid operations (in this case min).
- * Time: O(1) query, O(N * log N) construction.
- * Memory O(N * log N)
+ * Time: O(1) query, O(N \log N) construction.
+ * Memory: O(N \log N)
  */
 
 struct SparseTable{

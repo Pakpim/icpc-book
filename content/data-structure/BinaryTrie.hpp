@@ -1,75 +1,77 @@
 #pragma once
 
 /**
- * Author: Teetat T.
- * Date: 2024-06-11
+ * Author: Pasin P.
+ * Date: 2025-07-20
  * Description: Binary Trie
  */
 
-template<int BIT,class T = uint32_t,class S = int>
-struct BinaryTrie{
-    struct Node{
-        array<int,2> ch;
-        S cnt;
-        Node():ch{-1,-1},cnt(0){}
-    };
-    vector<Node> t;
-    BinaryTrie():t{Node()}{}
-    int new_node(){
-        t.emplace_back(Node());
-        return t.size()-1;
+template<int BIT>
+struct BinaryTrie {
+  struct Node {
+    array<int, 2> ch;
+    int cnt;
+    Node() : ch{-1, -1}, cnt(0) {}
+  };
+  vector<Node> t;
+  BinaryTrie() : t{Node()} {}
+  int new_node() {
+    t.emplace_back(Node());
+    return t.size()-1;
+  }
+  int size() { return t[0].cnt; }
+  bool empty() { return size()==0; }
+  void insert(ll val, int k=1) {
+    int cur = 0;
+    t[cur].cnt += k;
+    for (int i = BIT-1; i >= 0; --i) {
+      int b = val>>i & 1;
+      if (t[cur].ch[b] == -1) t[cur].ch[b] = new_node();
+      cur = t[cur].ch[b];
+      t[cur].cnt += k;
     }
-    S size(){
-        return t[0].cnt;
+  }
+  void erase(ll val, int k=1) {
+    if (count(val) < k) return;
+    int cur = 0;
+    t[cur].cnt -= k;
+    for (int i = BIT-1; i >= 0; --i) {
+      int b = val>>i & 1;
+      cur = t[cur].ch[b];
+      t[cur].cnt -= k;
     }
-    bool empty(){
-        return size()==0;
+  }
+  void clear() {
+    t = {Node};
+  }
+  ll get_max(ll val) {
+    if (empty()) return LLONG_MIN;
+    int cur = 0, ans = 0;
+    for (int i = BIT-1; i >= 0; --i) {
+      int b = val>>i & 1;
+      if (t[cur].ch[!b] != -1 && t[t[cur].ch[!b]].cnt > 0) cur = t[cur].ch[!b], ans <<= 1, ans++;
+      else cur = t[cur].ch[b], ans <<= 1;
     }
-    S get_cnt(int i){
-        return i!=-1?t[i].cnt:S(0);
+    return ans;
+  }
+  ll get_min(ll val) {
+    if (empty()) return LLONG_MAX;
+    int cur = 0, ans = 0;
+    for (int i = BIT-1; i >= 0; --i) {
+      int b = val>>i & 1;
+      if (t[cur].ch[b] != -1 && t[t[cur].ch[b]].cnt > 0) cur = t[cur].ch[b], ans <<= 1, ans++;
+      else cur = t[cur].ch[!b], ans <<= 1;
     }
-    void insert(T x,S k=1){
-        int u=0;
-        t[u].cnt+=k;
-        for(int i=BIT-1;i>=0;i--){
-            int v=x>>i&1;
-            if(t[u].ch[v]==-1)t[u].ch[v]=new_node();
-            u=t[u].ch[v];
-            t[u].cnt+=k;
-        }
+    return ans;
+  }
+  int count(ll val) {
+    int cur = 0;
+    for (int i = BIT-1; i >= 0; --i) {
+      int b = val>>i & 1;
+      if (t[cur].ch[b] == -1) return false;
+      cur = t[cur].ch[b];
     }
-    void erase(T x,S k=1){
-        int u=0;
-        assert(t[u].cnt>=k);
-        t[u].cnt-=k;
-        for(int i=BIT-1;i>=0;i--){
-            int v=x>>i&1;
-            u=t[u].ch[v];
-            assert(u!=-1&&t[u].cnt>=k);
-            t[u].cnt-=k;
-        }
-    }
-    T kth(S k,T x=0){
-        assert(k<size());
-        int u=0;
-        T res=0;
-        for(int i=BIT-1;i>=0;i--){
-            int v=x>>i&1;
-            if(k<get_cnt(t[u].ch[v])){
-                u=t[u].ch[v];
-            }else{
-                res|=T(1)<<i;
-                k-=get_cnt(t[u].ch[v]);
-                u=t[u].ch[v^1];
-            }
-        }
-        return res;
-    }
-    T min(T x){
-        return kth(0,x);
-    }
-    T max(T x){
-        return kth(size()-1,x);
-    }
+    return t[cur].cnt;
+  }
 };
 
