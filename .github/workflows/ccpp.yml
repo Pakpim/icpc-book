@@ -1,0 +1,28 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Machine
+        run: sudo apt-get update && sudo apt-get upgrade
+      - name: Compile All
+        run: make compile-all
+      - name: Run Tests
+        run: make test-all
+      - name: Install pdflatex
+        run: sudo apt-get install texlive-latex-base texlive-latex-recommended texlive-latex-extra
+      - name: Make Book
+        run: make book
+      - uses: stefanzweifel/git-auto-commit-action@v5
