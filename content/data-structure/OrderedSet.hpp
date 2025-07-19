@@ -4,7 +4,6 @@
 /**
  * Author: Borworntat D.
  * Date: 2024-08-02
- * License: CC0
  * Description: Ordered Set
  */
 
@@ -13,7 +12,7 @@ using namespace __gnu_pbds;
 
 template <class T>
 using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
-// can be change to less_equal
+// can be change to less_equal / greater
 
 void usage() {
   ordered_set<int> st, st_2;
@@ -21,5 +20,6 @@ void usage() {
   st.insert(1);
   cout << st.order_of_key(2);
   cout << *st.find_by_order(1);
+  st.erase(st.find_by_order(ss.order_of_key(5)));
   st.join(st_2); // merge
 }
