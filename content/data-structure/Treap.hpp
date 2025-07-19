@@ -7,8 +7,6 @@ using namespace std;
  * Description: Treap
  */
 
-//ช่วยด้วย ทำไงง ทำไมมันติด x
-
 using ll=long long;
 int n,q;
 mt19937 rnd;
