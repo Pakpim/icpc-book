@@ -2,6 +2,7 @@
  * Author: cp-algo
  * Date: 2025-07-20
  * Description: Knuth
+*/
 
 int solve() {
     int N;
