@@ -1,21 +1,17 @@
 #pragma once
-#include "../data-structure/SparseTable.hpp"
-#include "../group/monoid/Min.hpp"
 
 /**
  * Author: Teetat T.
  * Date: 2024-06-14
- * Description: Suffix Automaton.
+ * Description: Suffix Array.
  */
 
-template<class STR>
 struct SuffixArray{
     int n;
     vector<int> sa,isa,lcp;
-    SparseTable<MinMonoid<int>> st;
     SuffixArray(){}
-    SuffixArray(const STR &s){init(s);}
-    void init(const STR &s){
+    SuffixArray(const string &s){init(s);}
+    void init(const string &s){
         n=(int)s.size();
         sa=isa=lcp=vector<int>(n+1);
         sa[0]=n;
@@ -39,11 +35,5 @@ struct SuffixArray{
             lcp[isa[i]]=k;
             if(k)k--;
         }
-        st.init(lcp);
-    }
-    int get_lcp(int i,int j){
-        if(i==j)return n-i;
-        auto [l,r]=minmax(isa[i],isa[j]);
-        return st.query(l+1,r);
     }
 };

@@ -4,11 +4,10 @@
 /**
  * Author: Teetat T.
  * Date: 2024-06-14
- * Description: Z Algorithm. z[i] := the length of the longest common prefix between s and s[i:].
+ * Description: z[x] computes the length of the longest common prefix of s[i:] and s, except z[0] = 0. (abacaba -> 0010301)
  */
 
-template<class STR>
-vector<int> z_algorithm(const STR &s){
+vector<int> z_algorithm(const string &s){
     int n=(int)s.size();
     vector<int> z(n);
     z[0]=n;
