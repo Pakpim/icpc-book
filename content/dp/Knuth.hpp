@@ -2,14 +2,18 @@
  * Author: cp-algo
  * Date: 2025-07-20
  * Description: The Speedup is applied for transitions of the form
-
-$dp(i, j) = \min_{i \leq k < j} [ dp(i, k) + dp(k+1, j) + C(i, j) ].$
-Similar to divide and conquer DP, let  $opt(i, j)$  be the value of  $k$  that minimizes the expression in the transition ( 
-$opt$  is referred to as the "optimal splitting point" further in this article). The optimization requires that the following holds:
-$opt(i, j-1) \leq opt(i, j) \leq opt(i+1, j).$
-We can show that it is true when the cost function  $C$  satisfies the following conditions for  $a \leq b \leq c \leq d$ :
-$C(b, c) \leq C(a, d)$ ;
-$C(a, c) + C(b, d) \leq C(a, d) + C(b, c)$  (the quadrangle inequality [QI]).
+ * $$dp(i, j) = \min_{i \leq k < j} [ dp(i, k) + dp(k+1, j) + C(i, j) ].$$ 
+ * Similar to divide and conquer DP, let  
+ * $opt(i, j)$  be the value of  
+ * $k$  that minimizes the expression in the transition ( 
+ * $opt$  is referred to as the "optimal splitting point" further in this article). The optimization requires that the following holds:
+ * $$opt(i, j-1) \leq opt(i, j) \leq opt(i+1, j).$$ 
+ * We can show that it is true when the cost function  
+ * $C$  satisfies the following conditions for  
+ * $a \leq b \leq c \leq d$ :
+ * $C(b, c) \leq C(a, d)$ ;
+ * $C(a, c) + C(b, d) \leq C(a, d) + C(b, c)$  (the quadrangle inequality [QI]).
+ * This result is proved further below.
  */
 
 int solve() {
