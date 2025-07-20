@@ -1,5 +1,4 @@
 #pragma once
-#include "NTT.hpp"
 
 /**
  * Author: Teetat T.
@@ -32,10 +31,10 @@ struct FormalPowerSeries:vector<mint>{
         (*this)[0]-=rhs;
         return *this;
     }
-    FPS &operator*=(const FPS &rhs){
-        auto res=NTT<mint>()(*this,rhs);
-        return *this=FPS(res.begin(),res.end());
-    }
+    // FPS &operator*=(const FPS &rhs){
+    //     auto res=NTT<mint>()(*this,rhs);
+    //     return *this=FPS(res.begin(),res.end());
+    // }
     FPS &operator*=(const mint &rhs){
         for(auto &a:*this)a*=rhs;
         return *this;
