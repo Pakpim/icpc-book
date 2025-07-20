@@ -1,8 +1,8 @@
 #pragma once
 
 /**
- * Author: Teetat T.
- * Date: 2024-01-15
+ * Author: Pasin P.
+ * Date: 2025-07-20
  * Description: Segment Tree
  */
 template<class Node>
@@ -80,7 +80,7 @@ struct SegTree {
 };
 
 struct Node {
-    ll val;
+	ll val;
 	Node(ll x=LLONG_MAX):val(x){}
 	void apply(int l, int r, int x) {val = x;}
 	friend Node operator+(const Node &lhs, const Node &rhs) {

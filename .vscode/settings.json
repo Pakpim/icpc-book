@@ -11,6 +11,11 @@
     "span": "cpp",
     "string": "cpp",
     "string_view": "cpp",
-    "rope": "cpp"
+    "rope": "cpp",
+    "forward_list": "cpp",
+    "regex": "cpp",
+    "slist": "cpp",
+    "system_error": "cpp",
+    "chrono": "cpp"
   }
 }
