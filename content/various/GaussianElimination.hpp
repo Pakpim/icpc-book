@@ -1,45 +1,51 @@
-#pragma once
-#include "../template/Header.hpp"
-
 /**
- * Author: Teetat T.
- * Date: 2023-12-04
- * License: CC0
+ * Author: cp-algo
+ * Date: 2025-07-20
  * Description: Gaussian Elimination
  */
 
-struct Gauss {
-  int n, sz;
-  vector<ll> basis;
-  Gauss(int n = 0) {
-    init(n);
-  }
-  void init(int _n) {
-    n = _n, sz = 0;
-    basis.assign(n, 0);
-  }
-  void insert(ll x) {
-    for (int i = n - 1; i >= 0; i--)
-      if (x >> i & 1) {
-        if (!basis[i]) {
-          basis[i] = x;
-          sz++;
-          return;
-        }
-        x ^= basis[i];
-      }
-  }
-  ll getmax(ll k = 0) {
-    ll tot = 1ll << sz, res = 0;
-    for (int i = n - 1; i >= 0; i--)
-      if (basis[i]) {
-        tot >>= 1;
-        if ((k >= tot && res >> i & 1) || (k < tot && res >> i & 1 ^ 1))
-          res ^= basis[i];
-        if (k >= tot)
-          k -= tot;
-      }
-    return res;
-  }
-};
+const double EPS = 1e-9;
+const int INF = 2; // it doesn't actually have to be infinity or a big number
 
+int gauss (vector < vector<double> > a, vector<double> & ans) {
+    int n = (int) a.size();
+    int m = (int) a[0].size() - 1;
+
+    vector<int> where (m, -1);
+    for (int col=0, row=0; col<m && row<n; ++col) {
+        int sel = row;
+        for (int i=row; i<n; ++i)
+            if (abs (a[i][col]) > abs (a[sel][col]))
+                sel = i;
+        if (abs (a[sel][col]) < EPS)
+            continue;
+        for (int i=col; i<=m; ++i)
+            swap (a[sel][i], a[row][i]);
+        where[col] = row;
+
+        for (int i=0; i<n; ++i)
+            if (i != row) {
+                double c = a[i][col] / a[row][col];
+                for (int j=col; j<=m; ++j)
+                    a[i][j] -= a[row][j] * c;
+            }
+        ++row;
+    }
+
+    ans.assign (m, 0);
+    for (int i=0; i<m; ++i)
+        if (where[i] != -1)
+            ans[i] = a[where[i]][m] / a[where[i]][i];
+    for (int i=0; i<n; ++i) {
+        double sum = 0;
+        for (int j=0; j<m; ++j)
+            sum += ans[j] * a[i][j];
+        if (abs (sum - a[i][m]) > EPS)
+            return 0;
+    }
+
+    for (int i=0; i<m; ++i)
+        if (where[i] == -1)
+            return INF;
+    return 1;
+}

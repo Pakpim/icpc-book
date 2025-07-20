@@ -26,4 +26,3 @@ void range_xor(ll p,ll l,ll r,const F &query){
         }
     }
 }
-
